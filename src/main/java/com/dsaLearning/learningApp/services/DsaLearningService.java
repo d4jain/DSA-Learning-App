@@ -8,13 +8,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 @Service
 public class DsaLearningService {
     private final Map<String, List<String>> prompts;
+    private String apiKey;
 
     public DsaLearningService() {
         prompts = new HashMap<>();
+
+        try {
+            Properties props = new Properties();
+            props.load(new FileInputStream(".env"));
+            apiKey = props.getProperty("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");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load environment variables");
+        }
 
         prompts.put("array", List.of(
                 "What patterns do you notice in the problem? Could sorting or using a hash map help in any way?",
